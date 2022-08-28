@@ -1,0 +1,176 @@
+/////// LOGIN ///////
+
+url:https://generation3.000webhostapp.com/project/Training/Auth/user.php
+
+data_to_send={
+email:"",
+pass:"",
+token:""
+}
+
+<<<<< RETURENED STATUS >>>>>
+user_details
+OR
+user not found
+OR
+error happen
+
+==========================================================================
+
+/////// SIGN UP ///////
+
+url:https://generation3.000webhostapp.com/project/Training/Auth/sign_up.php
+
+data_to_send={
+name:"",
+email:"",
+pass:"",
+type:"",
+token:""
+}
+
+<<<<< RETURENED STATUS >>>>>
+successful
+OR
+Not Valid Values
+OR
+error happen
+OR
+email is already exist
+
+==========================================================================
+
+/////// RESET PASSWORD ///////
+
+url:https://generation3.000webhostapp.com/project/Training/Auth/reset_password.php
+
+data_to_send={
+user_id:"",
+new_pass:"",
+old_pass:""
+}
+
+<<<<< RETURENED STATUS >>>>>
+successful
+OR
+user not found
+OR
+error happen
+
+==========================================================================
+
+
+/////// FORGET PASSWORD ///////
+
+url:https://generation3.000webhostapp.com/project/Training/Auth/ForgetPass/new_pass.php
+
+data_to_send={
+user_email:"",
+user_type:"",
+new_password:""
+}
+
+<<<<< RETURENED STATUS >>>>>
+successful
+OR
+user not found
+OR
+error happen
+
+==========================================================================
+
+
+/////// SEND OTP ///////
+
+url:https://generation3.000webhostapp.com/project/Training/Auth/ForgetPass/SendOTPToEmail.php
+
+data_to_send={
+to_email:"",
+user_type:"",
+OTP:""
+}
+
+<<<<< RETURENED STATUS >>>>>
+successful
+OR
+user not found
+OR
+error happen
+OR
+Message could not be sent. Mailer Error: {info}
+Error: {error}
+
+==========================================================================
+
+
+/////// PHOTOGRAPHER PROFILE ///////
+
+url:https://generation3.000webhostapp.com/project/Training/profile_photoprapher.php
+
+data_to_send={
+user_id:""
+}
+
+<<<<< RETURENED STATUS >>>>>
+array of data
+OR
+user not found
+OR
+Not Valid Parametar Value
+
+
+==========================================================================
+
+
+/////// MAKEUP PROFILE ///////
+
+url:https://generation3.000webhostapp.com/project/Training/profile_Makeup.php
+
+data_to_send={
+user_id:""
+}
+
+<<<<< RETURENED STATUS >>>>>
+array of data
+OR
+user not found
+OR
+Not Valid Parametar Value
+
+
+==========================================================================
+
+
+/////// COMMENTS ///////
+
+url:https://generation3.000webhostapp.com/project/Training/Comments.php
+
+data_to_send={
+user_id:"",
+post_id:""
+}
+
+<<<<< RETURENED STATUS >>>>>
+array of data
+OR
+Not Valid Parametar Value
+
+==========================================================================
+
+
+/////// LIKES ///////
+
+url:https://generation3.000webhostapp.com/project/Training/select_likes.php
+
+data_to_send={
+post_id:""
+}
+
+<<<<< RETURENED STATUS >>>>>
+array of data
+OR
+Not Valid Parametar Value
+
+
+
+==========================================================================
