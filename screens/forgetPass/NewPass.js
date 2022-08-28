@@ -21,6 +21,7 @@ export default class NewPass extends Component {
           <Text style={StylesForgetPass.forgotPassCaption}>
             Please enter New password and confirm it to update your password.
           </Text>
+          <Text style={StylesForgetPass.forgotPassCaption}>Test github</Text>
         </View>
       </View>
     );
