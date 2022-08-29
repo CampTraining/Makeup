@@ -32,6 +32,13 @@ export const FONTS = {
     h4: RFValue(20) >= 20 ? RFValue(20) : 17,
     h5: RFValue(16) >= 16 ? RFValue(16) : 15,
     h6: RFValue(13) >= 13 ? RFValue(13) : 13
-}
+};
+export const MARGIN = {
+    xsMargin: 10,
+    smMargin: 20,
+    mdMargin: 25,
+    lgMargin: 30,
+    xlMargin: 45,
+  };
 
  

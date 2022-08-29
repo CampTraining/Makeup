@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { COLOR, FONTS, ICONS } from "../../constants"
+import { COLOR, FONTS, ICONS,MARGIN } from "../../constants"
 
 export const Styles = StyleSheet.create({
 
@@ -211,7 +211,15 @@ export const Styles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: RFValue(28),
         
-    }
+    },
+    highlight_view_style: {
+        //width: '100%',
+        flexDirection: 'row',
+        marginBottom: RFValue(MARGIN.xsMargin),
+        marginLeft: RFValue(MARGIN.xsMargin),
+        //justifyContent: 'flex-start',,
+      //   backgroundColor:"#f00"
+      }
 
 
 })

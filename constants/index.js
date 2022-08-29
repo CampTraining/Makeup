@@ -10,6 +10,9 @@ export {FONTS}
 import  {ICONS} from "./themes";
 export {ICONS}
 
+import  {MARGIN} from "./themes";
+export {MARGIN}
+
 import { endPoint } from "./themes";
 export {endPoint}
 

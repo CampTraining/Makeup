@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
@@ -14,10 +14,12 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Styles} from './styles';
-import {COLOR, images, FONTS, ICONS} from '../../constants';
-import {useNavigation} from '@react-navigation/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Styles } from './styles';
+import { COLOR, images, FONTS, ICONS,MARGIN } from '../../constants';
+import { useNavigation } from '@react-navigation/native';
+import InstaStory from 'react-native-insta-story';
+
 import axios from 'axios';
 const hightlights = [
   {
@@ -320,6 +322,98 @@ const hightlights = [
   },
 ];
 
+
+const data = [
+  {
+      user_id: 1,
+      user_image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYepoYngWIbQ0Y8DmOVFqJ1y8qMGW1VQWpFw&usqp=CAU',
+      user_name: "Alaa Mohamed ",
+      stories: [
+          {
+              story_id: 1,
+              story_image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYepoYngWIbQ0Y8DmOVFqJ1y8qMGW1VQWpFw&usqp=CAU',
+          },
+          {
+              story_id: 2,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyfeHXjqR2-B3oyVDcjEL_tvHdECuJyon5_w&usqp=CAU",
+          }]
+  },
+  {
+      user_id: 2,
+      user_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvFu5M0Ln05taRajiZ9ZvRcnpXClZ2q2gOWQ&usqp=CAU",
+      user_name: "salmaa",
+      stories: [
+          {
+              story_id: 1,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH96mRkkuKpoJnz-5yGjcMJV7_WhT8OFk_-w&usqp=CAU",
+          },
+          {
+              story_id: 2,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdQ-yrgSAQj07HGw22ooQmUd1H2ouQpaE4ug&usqp=CAU",
+          }]
+  },
+  {
+      user_id: 3,
+      user_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2HNdYPx7n9QMmdM6dgJDsDNO_whJ_5Mmmxw&usqp=CAU",
+      user_name: "Asmaa ",
+      stories: [
+          {
+              story_id: 1,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCVfPEq94Ru4XqUK0joWuhKih7f1xJBPr7MQ&usqp=CAU",
+          },
+          {
+              story_id: 2,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2HNdYPx7n9QMmdM6dgJDsDNO_whJ_5Mmmxw&usqp=CAU",
+          }]
+  }, {
+      user_id: 4,
+      user_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvFu5M0Ln05taRajiZ9ZvRcnpXClZ2q2gOWQ&usqp=CAU",
+      user_name: "Shahd",
+      stories: [
+          {
+              story_id: 1,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH96mRkkuKpoJnz-5yGjcMJV7_WhT8OFk_-w&usqp=CAU",
+          },
+          {
+              story_id: 2,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdQ-yrgSAQj07HGw22ooQmUd1H2ouQpaE4ug&usqp=CAU",
+          }]
+  }, {
+      user_id: 5,
+      user_image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYepoYngWIbQ0Y8DmOVFqJ1y8qMGW1VQWpFw&usqp=CAU',
+      user_name: "Maryam ",
+      stories: [
+          {
+              story_id: 1,
+              story_image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYepoYngWIbQ0Y8DmOVFqJ1y8qMGW1VQWpFw&usqp=CAU',
+          },
+          {
+              story_id: 2,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyfeHXjqR2-B3oyVDcjEL_tvHdECuJyon5_w&usqp=CAU",
+          },
+          {
+              story_id: 3,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyfeHXjqR2-B3oyVDcjEL_tvHdECuJyon5_w&usqp=CAU",
+          }]
+  }, {
+      user_id: 6,
+      user_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2HNdYPx7n9QMmdM6dgJDsDNO_whJ_5Mmmxw&usqp=CAU",
+      user_name: "Lobna ",
+      stories: [
+          {
+              story_id: 1,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCVfPEq94Ru4XqUK0joWuhKih7f1xJBPr7MQ&usqp=CAU",
+          },
+          {
+              story_id: 2,
+              story_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2HNdYPx7n9QMmdM6dgJDsDNO_whJ_5Mmmxw&usqp=CAU",
+          }]
+  },
+
+
+
+];
+
 const showFullStory = {
   name: '',
   img: '',
@@ -339,7 +433,7 @@ export default function Highlights(props) {
 
   const fullStoryFun = index_var => {
     let highlights_var = [...hightlights];
-    let storyObj = {...fullStory};
+    let storyObj = { ...fullStory };
     storyObj.name = highlights_var[index_var].name;
     storyObj.img = highlights_var[index_var].img;
     setStoryImage(storyObj);
@@ -369,7 +463,7 @@ export default function Highlights(props) {
     <>
       <Text style={Styles.textheader_List}>Hightlights</Text>
       {/* Hightlights */}
-      <FlatList
+      {/* <FlatList
         horizontal
         contentContainerStyle={{
           paddingHorizontal: RFValue(22),
@@ -396,7 +490,26 @@ export default function Highlights(props) {
             </>
           );
         }}
-      />
+      /> */}
+
+
+      <View style={[Styles.highlight_view_style,]}>
+
+        <InstaStory
+          data={data}
+          avatarSize={RFValue(60)}
+          duration={10}
+          unPressedBorderColor={COLOR.PrimaryColor}
+        >
+
+        </InstaStory>
+
+
+
+      </View>
+
+
+
 
       {/* HighLight detail */}
 
@@ -441,13 +554,13 @@ export default function Highlights(props) {
           <View
             style={[
               Styles.postHeader,
-              {alignItems: 'center', paddingHorizontal: RFValue(8)},
+              { alignItems: 'center', paddingHorizontal: RFValue(8) },
             ]}>
-            <View style={[Styles.img_name_follow, {width: RFValue(160)}]}>
+            <View style={[Styles.img_name_follow, { width: RFValue(160) }]}>
               <TouchableOpacity
                 style={[
                   Styles.artistImageContainer,
-                  {marginRight: RFValue(6)},
+                  { marginRight: RFValue(6) },
                 ]}>
                 <Image source={fullStory.img} style={Styles.artistImage} />
               </TouchableOpacity>
@@ -477,7 +590,7 @@ export default function Highlights(props) {
             <View
               style={[
                 Styles.Like_comment_view,
-                {width: RFValue(90), justifyContent: 'space-around'},
+                { width: RFValue(90), justifyContent: 'space-around' },
               ]}>
               <TouchableOpacity style={Styles.HeaderIcon}>
                 <Entypo
@@ -500,7 +613,7 @@ export default function Highlights(props) {
           </View>
 
           <ImageBackground
-            style={{flex: 1}}
+            style={{ flex: 1 }}
             source={fullStory.img}
             resizeMode="cover">
             <View
@@ -513,13 +626,13 @@ export default function Highlights(props) {
                 onPress={() => {
                   console.log('left');
                 }}
-                style={{width: '50%'}} // left
+                style={{ width: '50%' }} // left
               ></TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
                   console.log('right');
                 }}
-                style={{width: '50%'}} //right
+                style={{ width: '50%' }} //right
               ></TouchableOpacity>
             </View>
           </ImageBackground>
