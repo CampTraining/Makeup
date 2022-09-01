@@ -15,6 +15,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons"
 import { RFValue } from "react-native-responsive-fontsize"
 import { Styles } from "../home";
 import { COLOR, images, FONTS, ICONS } from "../../constants"
+import { Colors } from "react-native-paper";
 
 const hightlights = [
     { name: "Alaa Mohamed ", img: images.story1 },
@@ -252,14 +253,14 @@ export function SavedPage(props) {
         <>
 
             <View style={{ flex: 1, }}>
-                <View style={[Styles.header, { marginBottom: RFValue(20) }]}>
+                <View style={[Styles.header, { marginBottom: RFValue(20) ,justifyContent:"flex-start"}]}>
                     <View style={Styles.anyHeader}>
                         <TouchableOpacity
                             onPress={() => {
                                 navigation.navigate("Account")
                             }}
                         >
-                            < MaterialIcons name="arrow-back-ios" size={ICONS.mdIcon} color={"#fff"}
+                            < MaterialIcons name="arrow-back-ios" size={ICONS.mdIcon} color={Colors.dark_gray}
 
                             />
                         </TouchableOpacity>

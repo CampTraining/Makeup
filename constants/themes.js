@@ -40,5 +40,19 @@ export const MARGIN = {
     lgMargin: 30,
     xlMargin: 45,
   };
+  export const PADDING = {
+    xsPadding: 5,
+    smPadding: 10,
+    mdPadding: 15,
+    lgPadding: 20,
+    xlPadding: 25,
+};
+export const RADIUS = {
+    xsRadius: 10,
+    smRadius: 15,
+    mdRadius: 20,
+    lgRadius: 25,
+    xlRadius: 30,
+};
 
  

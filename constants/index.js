@@ -12,6 +12,11 @@ export {ICONS}
 
 import  {MARGIN} from "./themes";
 export {MARGIN}
+import  {PADDING} from "./themes";
+export {PADDING}
+
+import  {RADIUS} from "./themes";
+export {RADIUS}
 
 import { endPoint } from "./themes";
 export {endPoint}
