@@ -17,6 +17,8 @@ import {COLOR, FONTS, ICONS} from '../../constants';
 
 export default class PhoneVerification extends React.Component {
   render() {
+    const {otp, email, type} = this.props.route.params;
+
     return (
       <>
         <View style={StylesForgetPass.container}>
@@ -113,7 +115,10 @@ export default class PhoneVerification extends React.Component {
 
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('NewPass');
+                this.props.navigation.navigate('NewPass', {
+                  user_email: email,
+                  user_type: type,
+                });
               }}
               style={[
                 StylesForgetPass.resetView,
