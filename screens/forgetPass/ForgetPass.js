@@ -8,6 +8,7 @@ import {
   Modal,
   TouchableWithoutFeedback,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -17,6 +18,8 @@ import {COLOR, FONTS, ICONS} from '../../constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {BackArrowHeader} from '../../components';
+
+import axios from 'axios';
 /* ******************************************************************************************** */
 
 /* DESINE OF COMPONANTS */
@@ -29,6 +32,9 @@ export default class ForgetPass extends React.Component {
       modalVisible1: false,
       email_err: '',
       user_email: '',
+      loading: false,
+      OTP: '',
+      user_type: '',
     };
   }
 
@@ -40,16 +46,76 @@ export default class ForgetPass extends React.Component {
       this.setState({email_err: 'Please Enter correct Emial!'});
     } else {
       this.setState({email_err: ''});
-      this.setState({modalVisible1: true});
+      this.sendOTP();
     }
   }
+
+  generateRandomOTP = () => {
+    const digits = '0123456789';
+    let OTP = '';
+
+    for (let i = 0; i < 4; i++) {
+      OTP += digits[Math.floor(Math.random() * digits.length)];
+    }
+
+    return OTP;
+  };
+
+  sendOTP = () => {
+    this.setState({loading: true});
+    const OTP = this.generateRandomOTP();
+    const data_to_send = {
+      to_email: this.state.user_email,
+      user_type: 'مصور', // مصور | ميكب ارتست | مستخدم
+      OTP: OTP,
+    };
+
+    axios
+      .post(
+        'https://generation3.000webhostapp.com/project/Training/Auth/ForgetPass/SendOTPToEmail.php',
+        data_to_send,
+      )
+      .then(res => {
+        if (res.status == 200) {
+          // console.log(res.data);
+
+          if (res.data == 'successful') {
+            this.setState({
+              modalVisible1: true,
+              OTP,
+              user_type: data_to_send.user_type,
+            });
+          } else if (res.data == 'user not found') {
+            alert(
+              'this email not found, please enter the correct email associated with your account!',
+            );
+          } else {
+            alert('OTP not sent, something went wrong! please try again later');
+          }
+        }
+      })
+      .catch(err => {
+        console.log(err.message);
+        if (err.message == 'Network Error') {
+          alert(
+            'Oops, there is no internet connection!\nPlease reconnect to the network and try again.',
+          );
+        } else {
+          alert('Something went wrong! please try again later');
+        }
+      })
+      .finally(() => {
+        this.setState({loading: false});
+      });
+  };
 
   render() {
     return (
       <>
         <ScrollView
           showsVerticalScrollIndicator={false}
-          style={{backgroundColor: COLOR.White}}>
+          style={{backgroundColor: COLOR.White}}
+          keyboardShouldPersistTaps="handled">
           <View style={[StylesForgetPass.container]}>
             <BackArrowHeader navigation={this.props.navigation} />
 
@@ -87,7 +153,8 @@ export default class ForgetPass extends React.Component {
                   placeholder="Email"
                   style={StylesLogSign.email_passTextInput}
                   keyboardType="email-address"
-                  placeholderTextColor={COLOR.dark_gray}
+                  placeholderTextColor={COLOR.gray}
+                  autoCapitalize="none"
                 />
               </View>
               <Text
@@ -105,27 +172,29 @@ export default class ForgetPass extends React.Component {
                   this.validation();
                 }}
                 style={StylesForgetPass.resetView}>
-                <View>
-                  <Text style={StylesForgetPass.resetText}>Reset Password</Text>
-                </View>
+                {this.state.loading ? (
+                  <ActivityIndicator size={'large'} color={COLOR.White} />
+                ) : (
+                  <Text style={StylesForgetPass.resetText}>Send OTP</Text>
+                )}
               </TouchableOpacity>
             </View>
 
             <Modal
               visible={this.state.modalVisible1}
-              onRequestClose={() => {
-                this.setState({modalVisible1: false});
-              }}
+              // onRequestClose={() => {
+              //   this.setState({modalVisible1: false});
+              // }}
               animationType="slide"
               transparent={true}>
               <View style={StylesForgetPass.modelBackContainer}>
-                <TouchableWithoutFeedback
+                {/* <TouchableWithoutFeedback
                   style={{flex: 1}}
                   onPress={() => {
                     this.setState({modalVisible1: false});
                   }}>
                   <View style={StylesForgetPass.modelBackContainer2} />
-                </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback> */}
 
                 <View style={StylesForgetPass.modelBackContainer3}>
                   <View style={StylesForgetPass.modelContainer}>
@@ -138,11 +207,7 @@ export default class ForgetPass extends React.Component {
 
                     <View style={StylesForgetPass.modelTextViwe}>
                       <Text style={StylesForgetPass.modelBoldText}>
-                        Your Password has{' '}
-                      </Text>
-                      <Text style={StylesForgetPass.modelBoldText}>
-                        {' '}
-                        been reset
+                        Email has been sent!
                       </Text>
                     </View>
 
@@ -160,7 +225,11 @@ export default class ForgetPass extends React.Component {
                       <TouchableOpacity
                         onPress={() => {
                           this.setState({modalVisible1: false, user_email: ''});
-                          this.props.navigation.navigate('PhoneVerification');
+                          this.props.navigation.navigate('PhoneVerification', {
+                            otp: this.state.OTP,
+                            email: this.state.user_email,
+                            type: this.state.user_type,
+                          });
                         }}
                         style={StylesForgetPass.modelButton}>
                         <Text style={StylesForgetPass.modelButtonText}>

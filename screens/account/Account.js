@@ -1,384 +1,340 @@
-import React from 'react';
+import React from "react"
 import {
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  Modal,
-  TextInput,
-  AsyncStorage,
-  PermissionsAndroid,
-} from 'react-native';
-import {StylesAccount} from './styles';
-import {images, FONTS, COLOR, ICONS} from '../../constants';
+    Text,
+    View,
+    StyleSheet,
+    ScrollView,
+    Image,
+    TouchableOpacity,
+    FlatList,
+    Modal,
+    TextInput,
+    AsyncStorage,
+    PermissionsAndroid
+} from "react-native";
+import { StylesAccount } from "./styles";
+import { images,FONTS,COLOR,ICONS } from "../../constants";
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome from "react-native-vector-icons/FontAwesome"
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Feather from 'react-native-vector-icons/Feather';
-import {RFValue} from 'react-native-responsive-fontsize';
-import axios from 'axios';
+import Feather from "react-native-vector-icons/Feather"
+import { RFValue } from "react-native-responsive-fontsize";
+import axios from "axios";
 import * as ImagePicker from 'react-native-image-picker';
-import {Header} from '../../components';
+import { Header } from "../../components";
+
 
 export default class Account extends React.Component {
-  constructor({route}) {
-    super();
-    this.state = {
-      photo_uri:
-        'https://i.pinimg.com/236x/7e/69/bc/7e69bc0d7eae631323b38dd5d5e5c0fd.jpg',
-      icon_dark: false,
-      dark_mode: false,
-      name: '',
-      inpu_name: '',
-      //   name_change:route.params("editName"),
 
-      Visable_modal1: false,
-      Visable_modal2: false,
-    };
-  }
+    constructor({route}) {
+        super()
+        this.state = {
 
-  set_name() {
-    let user_name = this.state.inpu_name;
 
-    this.setState({inpu_name: user_name});
-    this.setChangeName(user_name);
-  }
+            photo_uri: "",
+            icon_dark: false,
+            dark_mode: false,
+            name: "",
+            inpu_name: "",
+        //   name_change:route.params("editName"),
 
-  ghange_icon_mode() {
-    let icon_dark_mode = this.state.icon_dark;
-    this.setState({icon_dark: !icon_dark_mode});
-  }
 
-  change_dark_mode() {
-    let DarkMode = this.state.dark_mode;
-    this.setState({dark_mode: !DarkMode});
-    this.store_dark(!DarkMode);
-  }
+            Visable_modal1: false,
+            Visable_modal2: false,
 
-  componentDidMount() {
-    this.get_dark();
-    this.requestCameraPermission();
-    axios
-      .get(
-        'https://generation3.000webhostapp.com/project/Training/photographer_list.php',
-      )
-      .then(function (response) {
-        if (response.status == 200) {
         }
-        // handle success
-        console.log(response);
-      });
-  }
+        
+    }
+   
 
-  async store_dark(value) {
-    await AsyncStorage.setItem('dark_mode', JSON.stringify(value));
-  }
+    set_name() {
+        let user_name = this.state.inpu_name
 
-  async get_dark() {
-    let mood = await AsyncStorage.getItem('dark_mode');
-
-    if (mood == null || mood == '') {
-      mood = 'false';
+        this.setState({ inpu_name: user_name })
+        this.setChangeName(user_name)
     }
 
-    mood = JSON.parse(mood);
-    this.setState({dark_mode: mood});
-  }
-
-  requestCameraPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: 'Cool Photo App Camera Permission',
-          message:
-            'Cool Photo App needs access to your camera ' +
-            'so you can take awesome pictures.',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the camera');
-      } else {
-        console.log('Camera permission denied');
-      }
-    } catch (err) {
-      console.warn(err);
+    ghange_icon_mode() {
+        let icon_dark_mode = this.state.icon_dark
+        this.setState({ icon_dark: !icon_dark_mode })
     }
-  };
 
-  selectFromGallery = () => {
-    let options = {
-      storageOptions: {
-        skipBackup: true,
-        path: 'images',
-      },
+    change_dark_mode() {
+        let DarkMode = this.state.dark_mode
+        this.setState({ dark_mode: !DarkMode })
+        this.store_dark(!DarkMode)
+
+    }
+
+    componentDidMount() {
+        this.get_dark()
+        this.requestCameraPermission()
+        this.set_name()
+        // axios.get('https://generation3.000webhostapp.com/project/Training/photographer_list.php')
+        //     .then(function (response) {
+        //         if (response.status == 200) {
+
+        //         }
+        //         // handle success
+        //         console.log(response);
+        //     })
+
+    }
+
+   
+    async store_dark(value) {
+        await AsyncStorage.setItem("dark_mode", JSON.stringify(value))
+    }
+
+    async get_dark() {
+        let mood = await AsyncStorage.getItem("dark_mode")
+
+        if (mood == null || mood == "") {
+            mood = "false"
+        }
+
+        mood = JSON.parse(mood)
+        this.setState({ dark_mode: mood })
+    }
+
+
+
+
+    requestCameraPermission = async () => {
+        try {
+            const granted = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.CAMERA,
+                {
+                    title: "Cool Photo App Camera Permission",
+                    message: "Cool Photo App needs access to your camera " + "so you can take awesome pictures.",
+                    buttonNeutral: "Ask Me Later",
+                    buttonNegative: "Cancel",
+                    buttonPositive: "OK"
+                });
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                console.log("You can use the camera");
+            } else {
+                console.log("Camera permission denied");
+            }
+        } catch (err) {
+            console.warn(err);
+        }
     };
-    ImagePicker.launchImageLibrary({options, includeBase64: true}, res => {
-      console.log('Response = ', res);
 
-      if (res.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (res.error) {
-        console.log('ImagePicker Error: ', res.error);
-      } else if (res.customButton) {
-        console.log('User tapped custom button: ', res.customButton);
-        alert(res.customButton);
-      } else {
-        this.setState({
-          photo_data: res.assets[0],
-          photo_uri: res.assets[0].uri,
+
+    selectFromGallery = () => {
+
+        let options = {
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+        ImagePicker.launchImageLibrary({ options, includeBase64: true }, (res) => {
+            console.log('Response = ', res);
+
+            if (res.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (res.error) {
+                console.log('ImagePicker Error: ', res.error);
+            } else if (res.customButton) {
+                console.log('User tapped custom button: ', res.customButton);
+                alert(res.customButton);
+            } else {
+
+                this.setState({
+                    photo_data: res.assets[0],
+                    photo_uri: res.assets[0].uri,
+                });
+
+                this.setChangeImage(res.assets[0].uri)
+
+            }
         });
-      }
-    });
-    this.setChangeImage(this.state.photo_uri);
-  };
+        
 
-  async setChangeImage(change_image) {
-    await AsyncStorage.setItem('changeImage', JSON.stringify(change_image));
-  }
-  async getChangeImage() {
-    let get_image = await AsyncStorage.getItem('changeImage');
-
-    if (get_image == null || get_image == undefined) {
-      get_image = '[]';
-    } else {
-      get_image = JSON.parse(get_image);
     }
 
-    this.setState({photo_uri: get_image});
-  }
+   
+     async setChangeImage  (change_image)  {
+        await AsyncStorage.setItem('changeImage', JSON.stringify(change_image))
+    }
+    async getChangeImage  ()  {
+        let get_image = await AsyncStorage.getItem('changeImage')
+        alert(get_image)
 
-  async setChangeName(change_name) {
-    await AsyncStorage.setItem('changename', JSON.stringify(change_name));
-  }
+        if (get_image == null || get_image == undefined) {
+            get_image = '[]'
+        } else {
+            get_image = JSON.parse(get_image)
+        }
 
-  async getChangeName() {
-    let get_name = await AsyncStorage.getItem('changename');
+       
+        this.setState({photo_uri:get_image})
 
-    if (get_name == null || get_name == undefined) {
-      get_name = 'User Name';
-    } else {
-      get_name = JSON.parse(get_name);
     }
 
-    console.log(get_name);
 
-    this.setState({name: get_name});
-  }
+    // async setChangeName  (change_name)  {
+    //     await AsyncStorage.setItem('changename', JSON.stringify(change_name))
+    // }
+    async getChangeName  ()  {
+        let get_name = await AsyncStorage.getItem('changename')
 
-  componentDidMount() {
-    // AsyncStorage.clear();
-    this.getChangeImage();
-    this.getChangeName();
-  }
+        if (get_name == null || get_name == undefined) {
+            get_name = ''
+        } else {
+            get_name = JSON.parse(get_name)
+        }
 
-  render() {
-    return (
-      <>
-        <View
-          style={[
-            StylesAccount.view_containr_profile,
-            {backgroundColor: this.state.dark_mode ? COLOR.dark_gray : '#fff'},
-          ]}>
-          <Header />
+       
+        this.setState({name:get_name})
 
-          <View style={[StylesAccount.view_profil_imge]}>
-            <TouchableOpacity
-              style={StylesAccount.storyImageContainer}
-              onPress={() => {
-                this.selectFromGallery();
-                //async
-              }}>
-              <Image
-                source={{uri: this.state.photo_uri}}
-                style={StylesAccount.style_img_profil}
-              />
-            </TouchableOpacity>
-          </View>
+    }
+    componentDidMount(){
+        this.getChangeImage()
+        this.getChangeName()
+      
+    }
 
-          <Text style={[StylesAccount.text_header, {color: COLOR.black}]}>
-            {this.state.name}
-          </Text>
 
-          <View style={StylesAccount.view_follow_profile}>
-            <Text
-              style={{
-                fontSize: RFValue(18),
-                color: this.state.dark_mode ? '#fff' : COLOR.dark_gray,
-                fontFamily: 'Gill Sans',
-              }}>
-              Following
-            </Text>
-            <Text
-              style={{
-                fontSize: RFValue(18),
-                color: this.state.dark_mode ? '#fff' : COLOR.dark_gray,
-              }}>
-              450
-            </Text>
-          </View>
 
-          <View
-            style={{
-              // backgroundColor: "#0f0",
-              height: RFValue(260),
-              justifyContent: 'center',
-              marginTop: RFValue(40),
-            }}>
-            <TouchableOpacity
-              onPress={() => {
-                // this.setState({ Visable_modal1: true, })
-                this.props.navigation.navigate('EditPage');
-              }}
-              style={[StylesAccount.view_contanir_edit]}>
-              <FontAwesome5
-                name="edit"
-                size={RFValue(ICONS.mdIcon)}
-                style={{
-                  color: COLOR.PrimaryColor,
-                  paddingHorizontal: RFValue(10),
-                }}
-              />
-              <Text
-                style={{
-                  flex: 1,
-                  fontSize: RFValue(FONTS.h4),
-                  color: this.state.dark_mode ? '#fff' : '#000',
-                  fontWeight: 'bold',
-                }}>
-                Edit
-              </Text>
-              <FontAwesome5
-                name="chevron-right"
-                size={RFValue(ICONS.mdIcon)}
-                style={{
-                  color: this.state.dark_mode ? '#fff' : COLOR.PrimaryColor,
-                  paddingRight: RFValue(10),
-                }}
-              />
-            </TouchableOpacity>
+    render() {
+        return (
+            <>
 
-            <TouchableOpacity
-              onPress={() => {
-                this.ghange_icon_mode();
-                this.change_dark_mode();
-              }}
-              style={[StylesAccount.view_contanir_edit]}>
-              <Ionicons
-                name="moon-sharp"
-                size={RFValue(ICONS.mdIcon)}
-                style={{
-                  color: COLOR.PrimaryColor,
-                  paddingHorizontal: RFValue(10),
-                }}
-              />
-              <Text
-                style={{
-                  flex: 1,
-                  fontSize: RFValue(FONTS.h4),
-                  color: this.state.dark_mode ? '#fff' : '#000',
-                  fontWeight: 'bold',
-                }}>
-                DarkMode
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  this.ghange_icon_mode();
-                  this.change_dark_mode();
-                }}>
-                <MaterialCommunityIcons
-                  name={
-                    this.state.icon_dark ? 'toggle-switch' : 'toggle-switch-off'
-                  }
-                  size={RFValue(35)}
-                  style={{
-                    color: this.state.dark_mode ? COLOR.PrimaryColor : '#000',
-                    paddingRight: RFValue(10),
-                  }}
-                />
-              </TouchableOpacity>
-            </TouchableOpacity>
+                <View style={[StylesAccount.view_containr_profile,
+                     { backgroundColor: this.state.dark_mode ? COLOR.dark_gray : "#fff" }]}>
 
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate('SavedPage');
-              }}
-              style={[StylesAccount.view_contanir_edit]}>
-              <FontAwesome
-                name="bookmark"
-                size={RFValue(ICONS.mdIcon)}
-                style={{
-                  color: COLOR.PrimaryColor,
-                  paddingHorizontal: RFValue(13),
-                }}
-              />
+              
 
-              <Text
-                style={{
-                  flex: 1,
-                  fontSize: RFValue(FONTS.h4),
-                  color: this.state.dark_mode ? '#fff' : '#000',
-                  fontWeight: 'bold',
-                }}>
-                Saved
-              </Text>
-              <FontAwesome5
-                name="chevron-right"
-                size={RFValue(ICONS.mdIcon)}
-                style={{
-                  color: this.state.dark_mode ? '#fff' : COLOR.PrimaryColor,
-                  paddingRight: RFValue(10),
-                }}
-              />
-            </TouchableOpacity>
+                        <Header/>
 
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate('SplashScreen');
-              }}
-              style={[StylesAccount.view_contanir_edit]}>
-              <FontAwesome
-                name="sign-out"
-                size={RFValue(ICONS.mdIcon)}
-                style={{
-                  color: COLOR.PrimaryColor,
-                  paddingHorizontal: RFValue(13),
-                }}
-              />
+                        <View style={[StylesAccount.view_profil_imge]}>
 
-              <Text
-                style={{
-                  flex: 1,
-                  fontSize: RFValue(FONTS.h4),
-                  color: this.state.dark_mode ? '#fff' : '#000',
-                  fontWeight: 'bold',
-                }}>
-                Sign Out
-              </Text>
-              <TouchableOpacity
-                onPress={() => {
-                  this.props.navigation.navigate('SplashScreen');
-                }}>
-                <FontAwesome5
-                  name="chevron-right"
-                  size={RFValue(ICONS.mdIcon)}
-                  style={{
-                    color: this.state.dark_mode ? '#fff' : COLOR.PrimaryColor,
-                    paddingRight: RFValue(10),
-                  }}
-                />
-              </TouchableOpacity>
-            </TouchableOpacity>
+                            <TouchableOpacity style={[StylesAccount.storyImageContainer,{borderColor:this.state.dark_mode ? "#fff" :"#373737",borderWidth:1.5}]}
+                             onPress={() => {
+                                this.selectFromGallery()
+                                //async
+                            }}
+                            ><Image source={{ uri: this.state.photo_uri }}
+                                    style={StylesAccount.style_img_profil}/>
 
-            {/* <TouchableOpacity style={StylesAccount.view_contanir_edit}>
+
+                            </TouchableOpacity>
+
+                        </View>
+
+                        
+                            <Text style={[StylesAccount.text_header, 
+                                { color: this.state.dark_mode ? "#fff" : COLOR.dark_gray }]}>
+                                    {this.state.name }</Text>
+
+                       
+
+
+
+                        <View style={StylesAccount.view_follow_profile}>
+                            <Text style={{ fontSize: RFValue(18), color: this.state.dark_mode ? "#fff" : COLOR.dark_gray,fontFamily:'Gill Sans' }}>Following</Text>
+                            <Text style={{ fontSize: RFValue(18), color: this.state.dark_mode ? "#fff" : COLOR.dark_gray, }}>450</Text>
+
+
+                        </View>
+
+
+
+                    <View style={{
+                       // backgroundColor: "#0f0",
+                         height: RFValue(260),
+                         justifyContent:'center',
+                          marginTop:RFValue(40)
+                    }}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                // this.setState({ Visable_modal1: true, })
+                                this.props.navigation.navigate("EditPage")
+                            }}
+                            style={[StylesAccount.view_contanir_edit]}>
+                            <FontAwesome5 name="edit" size={RFValue(ICONS.mdIcon)} 
+                            style={{ color:COLOR.PrimaryColor,paddingHorizontal:RFValue(10) }}/>
+                            <Text style={{ flex:1,fontSize: RFValue(FONTS.h4), 
+                                color: this.state.dark_mode ? "#fff" : "#000",fontWeight:"bold" }}>Edit</Text>
+                            <FontAwesome5 name="chevron-right" 
+                            size={RFValue(ICONS.mdIcon)} 
+                            style={{ color: this.state.dark_mode ? "#fff" :COLOR.PrimaryColor,paddingRight:RFValue(10)}}/>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                         onPress={() => {
+                            this.ghange_icon_mode()
+                            this.change_dark_mode()
+                        }}
+                            style={[StylesAccount.view_contanir_edit]}>
+                            <Ionicons name="moon-sharp" size={RFValue(ICONS.mdIcon)} 
+                            style={{ color:COLOR.PrimaryColor,paddingHorizontal:RFValue(10) }}/>
+                            <Text style={{ flex:1,fontSize: RFValue(FONTS.h4), 
+                                color: this.state.dark_mode ? "#fff" : "#000",fontWeight:"bold" }}>DarkMode</Text>
+                            <TouchableOpacity
+                            onPress={() => {
+                                this.ghange_icon_mode()
+                                this.change_dark_mode()
+                                           }}
+                            >
+                            <MaterialCommunityIcons  name={this.state.icon_dark ? "toggle-switch" : "toggle-switch-off"} 
+                            size={RFValue(35)} style={{ color:  this.state.dark_mode ? COLOR.PrimaryColor : "#000",
+                            paddingRight:RFValue(10)}}/>
+                            
+                            </TouchableOpacity>
+                           
+                        </TouchableOpacity>
+
+
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.navigation.navigate("SavedPage")
+                            }}
+                            style={[StylesAccount.view_contanir_edit]}>
+                            <FontAwesome name="bookmark"  size={RFValue(ICONS.mdIcon)} 
+                            style={{ color:COLOR.PrimaryColor,paddingHorizontal:RFValue(13) }}/>
+
+                            <Text style={{ flex:1,fontSize: RFValue(FONTS.h4), 
+                                color: this.state.dark_mode ? "#fff" : "#000",fontWeight:"bold" }}>Saved</Text>
+                            <FontAwesome5 name="chevron-right" 
+                            size={RFValue(ICONS.mdIcon)} 
+                            style={{ color: this.state.dark_mode ? "#fff" :COLOR.PrimaryColor,paddingRight:RFValue(10)}}/>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            onPress={() => {
+                                this.props.navigation.navigate("SplashScreen")
+                            }}
+                            style={[StylesAccount.view_contanir_edit]}>
+                            <FontAwesome name="sign-out"  size={RFValue(ICONS.mdIcon)} 
+                            style={{ color:COLOR.PrimaryColor,paddingHorizontal:RFValue(13) }}/>
+
+                            <Text style={{ flex:1,fontSize: RFValue(FONTS.h4), 
+                                color: this.state.dark_mode ? "#fff" : "#000",fontWeight:"bold" }}>Sign Out</Text>
+                                <TouchableOpacity
+                                  onPress={() => {
+                                    this.props.navigation.navigate("SplashScreen")
+                                }}
+                                >
+                                <FontAwesome5 name="chevron-right" size={RFValue(ICONS.mdIcon)} 
+                                    style={{ color: this.state.dark_mode ? "#fff" :COLOR.PrimaryColor,paddingRight:RFValue(10)}}/> 
+                                </TouchableOpacity>
+                            
+        
+                        </TouchableOpacity>
+                    
+
+
+                    
+
+
+
+                        {/* <TouchableOpacity style={StylesAccount.view_contanir_edit}>
 
                             <View style={{
                                 width: "10%",
@@ -408,7 +364,12 @@ export default class Account extends React.Component {
                             </View>
                         </TouchableOpacity>  */}
 
-            {/* <Modal
+
+
+
+
+
+                        {/* <Modal
                             visible={this.state.Visable_modal1}
 
                             animationType="fade"
@@ -443,16 +404,18 @@ export default class Account extends React.Component {
 
                                         {/* <TouchableOpacity style={{ width: "95%", height: "95%", backgroundColor: "#0ff", justifyContent: "center", alignItems: "center", borderRadius: 100 }}> */}
 
-            {/* <Image
+                                        {/* <Image
 
                                             source={{ uri: this.state.photo_uri }}
                                             style={StylesAccount.style_img_profil}
 
                                         ></Image> */}
 
-            {/* </TouchableOpacity> */}
+                                        {/* </TouchableOpacity> */}
 
-            {/* </View>
+
+
+                                    {/* </View>
 
                                     <TouchableOpacity
 
@@ -507,12 +470,19 @@ export default class Account extends React.Component {
 
                                 </View> */}
 
-            {/* </View>
+                            {/* </View>
 
 
                         </Modal >  */}
 
-            {/* <Modal
+
+
+
+
+
+
+
+                        {/* <Modal
                             visible={this.state.Visable_modal2}
 
                             animationType="fade"
@@ -546,12 +516,37 @@ export default class Account extends React.Component {
 
 
                         </Modal > */}
-          </View>
-        </View>
-      </>
-    );
-  }
+
+
+
+
+                    </View>
+
+
+
+
+
+                </View >
+
+
+            </>
+        )
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import React from "react";
 // import { Text, View } from "react-native"
@@ -593,7 +588,7 @@ export default class Account extends React.Component {
 // // import {useNavigation} from "@react-navigation/native"
 
 // export default class Account extends React.Component {
-
+    
 //     constructor() {
 //         super()
 //         // const {navigation} =props
@@ -646,6 +641,7 @@ export default class Account extends React.Component {
 //         this.setState({ dark_mode: mood })
 //     }
 
+
 //     // renderProductsList() {
 //     //     return this.state.list.map((item, index) => {
 //     //         return (
@@ -653,6 +649,7 @@ export default class Account extends React.Component {
 //     //             );
 //     //     });
 //     // }
+
 
 //     render() {
 //         return (
@@ -690,6 +687,8 @@ export default class Account extends React.Component {
 
 //                         </View>
 
+
+
 //                         <View style={StylesAccount.view_follow_profile}>
 //                             <Text style={{ fontSize: RFValue(18), color: this.state.dark_mode ? "#fff" : "#000", fontWeight: "500" }}>Following</Text>
 //                             <Text style={{ fontSize: RFValue(18), color: this.state.dark_mode ? "#fff" : "#000", fontWeight: "500", }}>450</Text>
@@ -701,9 +700,13 @@ export default class Account extends React.Component {
 //                             justifyContent: "center", alignItems: "center", flexDirection: "column"
 //                         }}>
 
+
 //                         </View> */}
 
 //                     </View>
+
+
+
 
 //                     <View style={{
 //                         // backgroundColor: "#0f0",
@@ -718,7 +721,7 @@ export default class Account extends React.Component {
 
 //                             <View style={{
 //                                 width: "10%",
-//                                 //  backgroundColor: "#fff",
+//                                 //  backgroundColor: "#fff", 
 //                                 alignItems: "center"
 //                             }}>
 //                                 <TouchableOpacity>
@@ -728,14 +731,14 @@ export default class Account extends React.Component {
 
 //                             <View style={{
 //                                 width: "80%",
-//                                 //  backgroundColor: "#0ff"
+//                                 //  backgroundColor: "#0ff" 
 //                             }}>
 
 //                                 <Text style={{ fontSize: RFValue(20), color: this.state.dark_mode ? "#fff" : "#000", fontWeight: "bold" }}>Edit</Text>
 //                             </View>
 //                             <View style={{
 //                                 width: "10%",
-//                                 //  backgroundColor: "#fff",
+//                                 //  backgroundColor: "#fff", 
 //                                 alignItems: "center"
 //                             }}>
 //                                 <TouchableOpacity
@@ -749,6 +752,8 @@ export default class Account extends React.Component {
 //                                 </TouchableOpacity>
 //                             </View>
 //                         </TouchableOpacity>
+
+
 
 //                         <View style={StylesAccount.view_contanir_edit}>
 
@@ -771,7 +776,7 @@ export default class Account extends React.Component {
 //                             </View>
 //                             <View style={{
 //                                 width: "10%",
-//                                 //  backgroundColor: "#fff",
+//                                 //  backgroundColor: "#fff", 
 //                                 alignItems: "center"
 //                             }}>
 //                                 <TouchableOpacity
@@ -786,6 +791,7 @@ export default class Account extends React.Component {
 //                                 </TouchableOpacity>
 //                             </View>
 //                         </View>
+
 
 //                         <View style={StylesAccount.view_contanir_edit}>
 
@@ -827,7 +833,7 @@ export default class Account extends React.Component {
 
 //                             <View style={{
 //                                 width: "10%",
-//                                 //  backgroundColor: "#fff",
+//                                 //  backgroundColor: "#fff", 
 //                                 alignItems: "center"
 //                             }}>
 //                                 <TouchableOpacity>
@@ -863,13 +869,13 @@ export default class Account extends React.Component {
 
 //                         <TouchableOpacity style={StylesAccount.view_contanir_edit}
 //                         onPress={()=>{
-//                           this.props.navigation.navigate("SplashScreen")
+//                           this.props.navigation.navigate("SplashScreen")  
 //                         }}
 //                         >
 
 //                             <View style={{
 //                                 width: "10%",
-//                                 // backgroundColor: "#fff",
+//                                 // backgroundColor: "#fff", 
 //                                 alignItems: "center"
 //                             }}>
 //                                 <TouchableOpacity>
@@ -879,14 +885,14 @@ export default class Account extends React.Component {
 
 //                             <View style={{
 //                                 width: "80%",
-//                                 //  backgroundColor: "#0ff"
+//                                 //  backgroundColor: "#0ff" 
 //                             }}>
 
 //                                 <Text style={{ fontSize: RFValue(20), color: this.state.dark_mode ? "#fff" : "#000", fontWeight: "bold" }}>Sign Out</Text>
 //                             </View>
 //                             <View style={{
 //                                 width: "10%",
-//                                 // backgroundColor: "#fff",
+//                                 // backgroundColor: "#fff", 
 //                                 alignItems: "center"
 //                             }}>
 //                                 <TouchableOpacity>
@@ -894,6 +900,11 @@ export default class Account extends React.Component {
 //                                 </TouchableOpacity>
 //                             </View>
 //                         </TouchableOpacity>
+
+
+
+
+
 
 //                         {/* <Modal
 //                             visible={this.state.Visable_modal1}
@@ -918,12 +929,15 @@ export default class Account extends React.Component {
 //                                         <Icon name="chevron-left" size={ICONS.xlIcon} style={{ color: "#000" }} />
 //                                     </TouchableOpacity>
 
+
 //                                 </View>
+
 
 //                                 <View style={StylesAccount.view_contanir_text_input}>
 //                                     <TextInput
 //                                         placeholder="Enter New Name "
 //                                         placeholderTextColor={"#000"}
+
 
 //                                         value={this.state.inpu_name}
 //                                         onChangeText={(value) => {
@@ -931,6 +945,7 @@ export default class Account extends React.Component {
 //                                         }}
 
 //                                         style={StylesAccount.text_input}
+
 
 //                                     ></TextInput>
 
@@ -950,9 +965,15 @@ export default class Account extends React.Component {
 
 //                             </View>
 
+
 //                         </Modal > */}
 
 //                         {/* <EditPage /> */}
+
+
+
+
+
 
 //                         <Modal
 //                             visible={this.state.Visable_modal2}
@@ -977,15 +998,25 @@ export default class Account extends React.Component {
 //                                         <Icon name="chevron-left" size={ICONS.xlIcon} style={{ color: "#000" }} />
 //                                     </TouchableOpacity>
 
+
 //                                 </View>
 
 //                             </View>
 
+
 //                         </Modal >
+
+
+
 
 //                     </View>
 
+
+
+
+
 //                 </View >
+
 
 //             </>
 //         )

@@ -11,9 +11,9 @@ import {
   Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {StylesForgetPass} from './styles';
-import {COLOR, FONTS, ICONS} from '../../constants';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { StylesForgetPass } from './styles';
+import { COLOR, FONTS, ICONS } from '../../constants';
 import OTPInputView from '@twotalltotems/react-native-otp-input'
 
 import Clipboard from '@react-native-community/clipboard';
@@ -24,9 +24,7 @@ export default class PhoneVerification extends React.Component {
     super()
 
     this.state = {
-      code:"",
-
-
+      code: "",
 
     }
 
@@ -36,13 +34,14 @@ export default class PhoneVerification extends React.Component {
 
 
   render() {
+    const { otp, email, type } = this.props.route.params;
     return (
       <>
         <View style={StylesForgetPass.container}>
           <View
             style={[
               StylesForgetPass.arrowContainer,
-              {backgroundColor: COLOR.White},
+              { backgroundColor: COLOR.White },
             ]}>
             <TouchableOpacity
               onPress={() => {
@@ -53,18 +52,18 @@ export default class PhoneVerification extends React.Component {
                 name="arrow-left"
                 color={COLOR.dark_gray}
                 size={ICONS.xlIcon}
-                style={{marginRight: RFValue(15), opacity: 0.9}}></Icon>
+                style={{ marginRight: RFValue(15), opacity: 0.9 }}></Icon>
             </TouchableOpacity>
           </View>
 
           <ScrollView
             showsVerticalScrollIndicator={false}
-            style={{backgroundColor: COLOR.White}}>
+            style={{ backgroundColor: COLOR.White }}>
             <View style={StylesForgetPass.VerficationContainer}>
               <Text
                 style={[
                   StylesForgetPass.VerficationText,
-                  {marginBottom: RFValue(-15)},
+                  { marginBottom: RFValue(-15) },
                 ]}>
                 OTP
               </Text>
@@ -115,23 +114,23 @@ export default class PhoneVerification extends React.Component {
               /> */}
 
 
-  <OTPInputView
-    style={{width: '80%', height: 200 ,}}
-    pinCount={4}
-    // code=""
-    autoFocusOnLoad={true}
-    // codeInputFieldStyle={styles.borderStyleBase}
-    // codeInputHighlightStyle={styles.borderStyleHighLighted}
-    codeInputFieldStyle={StylesForgetPass.underlineStyleBase}
-    codeInputHighlightStyle={StylesForgetPass.underlineStyleHighLighted}
-    onCodeFilled = {(code => {
-        console.log(`Code is ${code}, you are good to go!`)
-    })}
-    code={this.state.code}
-    onCodeChanged={
-      code=>this.setState({code:code})
-    }
-/> 
+              <OTPInputView
+                style={{ width: '80%', height: 200, }}
+                pinCount={4}
+                // code=""
+                autoFocusOnLoad={true}
+                // codeInputFieldStyle={styles.borderStyleBase}
+                // codeInputHighlightStyle={styles.borderStyleHighLighted}
+                codeInputFieldStyle={StylesForgetPass.underlineStyleBase}
+                codeInputHighlightStyle={StylesForgetPass.underlineStyleHighLighted}
+                onCodeFilled={(code => {
+                  console.log(`Code is ${code}, you are good to go!`)
+                })}
+                code={this.state.code}
+                onCodeChanged={
+                  code => this.setState({ code: code })
+                }
+              />
 
 
 
@@ -156,7 +155,7 @@ export default class PhoneVerification extends React.Component {
                 <Text
                   style={[
                     StylesForgetPass.resendText,
-                    {color: COLOR.PrimaryColor},
+                    { color: COLOR.PrimaryColor },
                   ]}>
                   Resend a new code.
                 </Text>
@@ -165,12 +164,15 @@ export default class PhoneVerification extends React.Component {
 
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('NewPass');
+                this.props.navigation.navigate('NewPass', {
+                  user_email: email,
+                  user_type: type,
+                })
                 // alert("Done")
               }}
               style={[
                 StylesForgetPass.resetView,
-                {alignSelf: 'center', marginTop: RFValue(12)},
+                { alignSelf: 'center', marginTop: RFValue(12) },
               ]}>
               <View>
                 <Text style={StylesForgetPass.resetText}>Next</Text>
