@@ -14,8 +14,27 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {StylesForgetPass} from './styles';
 import {COLOR, FONTS, ICONS} from '../../constants';
+import OTPInputView from '@twotalltotems/react-native-otp-input'
+
+import Clipboard from '@react-native-community/clipboard';
 
 export default class PhoneVerification extends React.Component {
+
+  constructor() {
+    super()
+
+    this.state = {
+      code:"",
+
+
+
+    }
+
+  }
+
+
+
+
   render() {
     return (
       <>
@@ -63,7 +82,7 @@ export default class PhoneVerification extends React.Component {
             </View>
 
             <View style={StylesForgetPass.circleInputContainer}>
-              <TextInput
+              {/* <TextInput
                 maxLength={1}
                 color={COLOR.White}
                 fontSize={FONTS.h5}
@@ -93,7 +112,40 @@ export default class PhoneVerification extends React.Component {
                 fontSize={FONTS.h5}
                 keyboardType="numeric"
                 style={StylesForgetPass.circleInputView}
-              />
+              /> */}
+
+
+  <OTPInputView
+    style={{width: '80%', height: 200 ,}}
+    pinCount={4}
+    // code=""
+    autoFocusOnLoad={true}
+    // codeInputFieldStyle={styles.borderStyleBase}
+    // codeInputHighlightStyle={styles.borderStyleHighLighted}
+    codeInputFieldStyle={StylesForgetPass.underlineStyleBase}
+    codeInputHighlightStyle={StylesForgetPass.underlineStyleHighLighted}
+    onCodeFilled = {(code => {
+        console.log(`Code is ${code}, you are good to go!`)
+    })}
+    code={this.state.code}
+    onCodeChanged={
+      code=>this.setState({code:code})
+    }
+/> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             </View>
 
             <View style={StylesForgetPass.resendContainer}>
@@ -114,6 +166,7 @@ export default class PhoneVerification extends React.Component {
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('NewPass');
+                // alert("Done")
               }}
               style={[
                 StylesForgetPass.resetView,
