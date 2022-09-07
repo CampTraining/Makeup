@@ -42,6 +42,7 @@ export class Comment extends Component {
     this.state = {
       text: "",
       visible: true,
+      likeCounter: 0,
       replay_comment: '',
       current_comment: "",
 
@@ -165,7 +166,11 @@ export class Comment extends Component {
     })
   }
 
-
+  add_like() {
+    let numOfLikes = this.state.likeCounter
+    numOfLikes++
+    this.setState({ likeCounter: numOfLikes })
+  }
 
 
   render() {
@@ -182,21 +187,22 @@ export class Comment extends Component {
 
       }]}>
 
-      
-        
 
 
-        <View style={[Styles.header, { justifyContent: "space-between", height: RFValue(50) ,
-        // backgroundColor:"#ff0"
+
+
+        <View style={[Styles.header, {
+          justifyContent: "space-between", height: RFValue(50),
+          // backgroundColor:"#ff0"
         }]}>
-          <View style={[Styles.anyHeader,{
+          <View style={[Styles.anyHeader, {
             // backgroundColor:"#0f0",
-            width:"60%",
-          padding:RFValue(5)
+            width: "60%",
+            padding: RFValue(5)
           }]}>
             <TouchableOpacity
               onPress={() => {
-             this.props.navigation.navigate("Home")
+                this.props.navigation.navigate("Home")
               }}
 
             >
@@ -218,7 +224,7 @@ export class Comment extends Component {
           // backgroundColor: COLOR.,
           borderBottomLeftRadius: RFValue(30),
           borderBottomRightRadius: RFValue(30),
-          paddingBottom: 40,
+          // paddingBottom: 40,
           // backgroundColor:"#00f"
 
         }}>
@@ -255,6 +261,7 @@ export class Comment extends Component {
 
                   }}>
 
+                    {/* Comment View */}
                     <View style={{
                       backgroundColor: "#fff",
                       borderWidth: RFValue(1.5),
@@ -268,6 +275,8 @@ export class Comment extends Component {
                       <Text style={styles.messageTitleStyle}>{comment.comment_content}</Text>
                     </View>
 
+
+                    {/* Replys Map */}
                     {
                       comment.replays.length > 0 ? comment.replays.map((replay, index) => (
                         <View style={{ flexDirection: "row" }}>
@@ -308,6 +317,7 @@ export class Comment extends Component {
                       )) : null
                     }
 
+                    {/* Like&Reply View */}
                     <View
                       style={{
                         // backgroundColor: "#ff0",
@@ -319,13 +329,28 @@ export class Comment extends Component {
                       }}
 
                     >
+                      {/* Like TouchableOpacity */}
                       <TouchableOpacity
                         style={{
                           // backgroundColor: "#f00",
-                          padding: RFValue(3)
+                          padding: RFValue(5),
+                          flexDirection: 'row',
+                          justifyContent: 'space-between'
 
                         }}
+                        onPress={() => {
+                          this.add_like()
+                        }}
                       >
+                        <Text style={{
+
+                          fontSize: RFValue(FONTS.h6),
+                          color: COLOR.dark_gray,
+                          // fontWeight: 'bold',
+                          paddingHorizontal: RFValue(3)
+                        }}
+                        >{this.state.likeCounter == 0 ? null : this.state.likeCounter}</Text>
+
                         <Text style={{
 
                           fontSize: RFValue(FONTS.h6),
@@ -335,10 +360,11 @@ export class Comment extends Component {
                         >Like</Text>
                       </TouchableOpacity>
 
+                      {/* Reply TouchableOpacity */}
                       <TouchableOpacity
                         style={{
                           // backgroundColor: "#f00",
-                          padding: RFValue(3)
+                          padding: RFValue(5)
 
                         }}
 
@@ -356,6 +382,7 @@ export class Comment extends Component {
                         }}
                         >Reply</Text>
                       </TouchableOpacity>
+
                     </View>
 
 
@@ -394,7 +421,7 @@ export class Comment extends Component {
               this.add()
             }}
           >
-                <Ionicons name="send" color={COLOR.PrimaryColor} size={ICONS.xlIcon} />
+            <Ionicons name="send" color={COLOR.PrimaryColor} size={ICONS.xlIcon} />
           </TouchableOpacity>
 
         </View>

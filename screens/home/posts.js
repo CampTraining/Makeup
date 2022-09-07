@@ -22,7 +22,6 @@ import { FONTS, ICONS } from "../../constants"
 import { useNavigation } from "@react-navigation/native"
 
 import axios from 'axios'
-
 import { endPoint } from "../../constants";
 
 const hightlights = [
@@ -131,7 +130,7 @@ const posts = [
         isFollow: false,
         isSaved: false,
         isLiked: false,
-       
+
 
     },
     {
@@ -145,7 +144,6 @@ const posts = [
 
     },
 ]
-
 const showFullImgPostObj = {
     name: "",
     img: "",
@@ -169,6 +167,8 @@ const savedItemsArr = [
         isLiked: false,
     }
 ]
+
+
 export default function Posts(props) {
     // const {navigation}=props
     const navigation = useNavigation()
@@ -184,23 +184,27 @@ export default function Posts(props) {
     const [isDark, setDark] = useState(false)
 
 
+    // Functions
     const likeFun = (index_var) => {
         let post_var = [...post]
         post_var[index_var].isLiked = !post_var[index_var].isLiked
         setPost(post_var)
     }
+
     const SavedFun = (index_var) => {
         let post_var = [...post]
         post_var[index_var].isSaved = !post_var[index_var].isSaved
         setPost(post_var)
 
     }
+
     const FollowFun = (index_var) => {
         let post_var = [...post]
         post_var[index_var].isFollow = !post_var[index_var].isFollow
         setPost(post_var)
 
     }
+
     const fullImageFun = (item_var) => {
         // let post_var = [...post]
         let imgObj = { ...fullImage }
@@ -210,6 +214,7 @@ export default function Posts(props) {
         imgObj.isLiked = item_var.isLiked
         setfullImage(imgObj)
     }
+
     const fullStoryFun = (index_var) => {
         let highlights_var = [...hightlights]
         let storyObj = { ...fullStory }
@@ -217,6 +222,7 @@ export default function Posts(props) {
         storyObj.img = highlights_var[index_var].img
         setStoryImage(storyObj)
     }
+
     const add_to_saved = (index_var) => {
         let post_var = [...post]
         let savedItems_var = [...savedArr]
@@ -246,7 +252,6 @@ export default function Posts(props) {
 
     }
 
-
     const removeFromSaved = (index_var) => {
         // let post_var = [...post]
         let savedItems_var = [...savedArr]
@@ -254,8 +259,6 @@ export default function Posts(props) {
         setSavedArr(savedItems_var)
         setSavedPosts(savedItems_var)
     }
-
-
 
     const getData = () => {
         axios.get(endPoint + '/photographer_list.php').then((response) => {
@@ -274,6 +277,7 @@ export default function Posts(props) {
 
     }, [])
 
+
     return (
         <>
             {/* Posts */}
@@ -289,7 +293,7 @@ export default function Posts(props) {
                                 <View style={[Styles.postHeader,]}>
 
                                     <View style={Styles.img_name_follow}>
-
+                                        {/* Artist Image */}
                                         <TouchableOpacity style={Styles.artistImageContainer}
                                             onPress={() => {
                                                 navigation.navigate("ProfilePage")
@@ -297,6 +301,8 @@ export default function Posts(props) {
                                         >
                                             <Image source={item.img_artist} style={Styles.artistImage} />
                                         </TouchableOpacity>
+
+                                        {/* Artist Name */}
                                         <TouchableOpacity style={{
                                             width: RFValue(100),
                                         }}
@@ -307,6 +313,8 @@ export default function Posts(props) {
                                             <Text style={{ fontSize: FONTS.h5, fontWeight: "bold", color: isDark ? "#fff" : null }}>{item.name + " ."}</Text>
 
                                         </TouchableOpacity>
+
+                                        {/* Follow TouchableOpacity */}
                                         <TouchableOpacity style={Styles.followBtn}
                                             onPress={() => isAuth ? FollowFun(index) : navigation.navigate("Login")}
                                         >
@@ -318,7 +326,10 @@ export default function Posts(props) {
                                                 marginLeft: RFValue(8)
                                             }}>{item.isFollow ? "Unfollow" : "Follow"}</Text>
                                         </TouchableOpacity>
+
                                     </View>
+
+                                    {/* Save TouchableOpacity */}
                                     <TouchableOpacity style={Styles.HeaderIcon}
                                         onPress={() => {
                                             isAuth ? (SavedFun(index),
@@ -341,11 +352,11 @@ export default function Posts(props) {
                                             color={isDark ? "#fff" : "#373737"}
                                         />
                                     </TouchableOpacity>
+
                                 </View>
 
 
                                 {/* PostImage */}
-
                                 <View style={[Styles.styleImagePost,]} >
                                     <TouchableHighlight style={{ flex: 1 }}
                                         onPress={() => {
@@ -371,17 +382,17 @@ export default function Posts(props) {
                                     >
                                         <AntDesign
                                             name={item.isLiked ? "heart" : "hearto"} size={ICONS.lgIcon}
-                                            color={isDark ?"#fff" :(item.isLiked ? COLOR.red : null)
-                                            } 
-                                            
-                                            />
+                                            color={isDark ? "#fff" : (item.isLiked ? COLOR.red : null)
+                                            }
+
+                                        />
 
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={Styles.anyIconContainer}
-                                    onPress={() => {
-                                        navigation.navigate("Comment")
-                                    }} 
+                                        onPress={() => {
+                                            navigation.navigate("Comment")
+                                        }}
 
                                     >
                                         <FontAwesome name="comment-o" size={ICONS.lgIcon} />
