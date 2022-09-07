@@ -29,7 +29,7 @@ export default class EditPage extends React.Component {
     constructor() {
         super()
         this.state = {
-            photo_uri: "https://i.pinimg.com/236x/7e/69/bc/7e69bc0d7eae631323b38dd5d5e5c0fd.jpg",
+            photo_uri: "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhomey.app%2Fimg%2Fnav%2Faccount.svg&imgrefurl=https%3A%2F%2Fhomey.app%2Fen-gb%2Faccount%2Fsubscriptions%2F&tbnid=mkm9VteTbOudZM&vet=12ahUKEwjH0IyGzt_5AhUPeBoKHT6RBM4QMygSegUIARDnAQ..i&docid=d51JUCMEu1GnmM&w=800&h=800&q=photo%20account&ved=2ahUKEwjH0IyGzt_5AhUPeBoKHT6RBM4QMygSegUIARDnAQ",
             icon_dark: false,
             dark_mode: false,
            name: "Ayman Gaballah",
@@ -43,11 +43,35 @@ export default class EditPage extends React.Component {
     set_name() {
         let user_name = this.state.inpu_name
         this.setState({
-            inpu_name: user_name,
+            name: user_name,
            
         })
         this.setChangeName(user_name)
     }
+
+
+    change_dark_mode() {
+        let DarkMode = this.state.dark_mode
+        this.setState({ dark_mode: !DarkMode })
+        this.store_dark(!DarkMode)
+
+    }
+
+    async store_dark(value) {
+        await AsyncStorage.setItem("dark_mode", JSON.stringify(value))
+    }
+
+    async get_dark() {
+        let mood = await AsyncStorage.getItem("dark_mode")
+
+        if (mood == null || mood == "") {
+            mood = "false"
+        }
+
+        mood = JSON.parse(mood)
+        this.setState({ dark_mode: mood })
+    }
+
 
     requestCameraPermission = async () => {
         try {
@@ -95,9 +119,11 @@ export default class EditPage extends React.Component {
                     photo_data: res.assets[0],
                     photo_uri: res.assets[0].uri,
                 });
+
+                this.setChangeImage(res.assets[0].uri)
+
             }
         });
-        this.setChangeImage(this.state.photo_uri)
 
     }
 
@@ -139,7 +165,10 @@ export default class EditPage extends React.Component {
     componentDidMount() {
         this.getChangeName()
         this.getChangeImage()
+        this.get_dark()
     }
+
+   
 
     render() {
         return (
@@ -158,18 +187,19 @@ export default class EditPage extends React.Component {
                         <TouchableOpacity
                             onPress={() => {
                                 this.props.navigation.navigate("Account")
-                                this.set_name()
+                                // this.set_name()
                                 // this.getChangeName()
-                                // this.getChangeImage()
                             }}
                         >
-                            <FontAwesome5 name="chevron-left" color={"#373737"}
+                            <FontAwesome5 name="chevron-left" color={this.state.dark_mode ? "#fff" :"#373737"}
                                 size={ICONS.xlIcon} style={{ marginRight: RFValue(15) }} />
                         </TouchableOpacity>
                         <TouchableOpacity
 
                             onPress={() => {
                                 this.set_name()
+                                // this.getChangeName()
+                                this.getChangeImage()
                                 this.props.navigation.navigate("Account")
                                 //async
                             }}
@@ -185,10 +215,12 @@ export default class EditPage extends React.Component {
 
 
                     <ScrollView>
-                        <View style={[StylesAccount.view_profil_imge, { height: 200 }]}>
+                        <View style={[StylesAccount.view_profil_imge, { height: 200 ,}]}>
                             <Image
                                 source={{ uri: this.state.photo_uri }}
-                                style={StylesAccount.style_img_profil}
+                                style={[StylesAccount.style_img_profil,{
+                                    backgroundColor:this.state.dark_mode ? "#373737" :"#fff",
+                                    borderColor:this.state.dark_mode ? "#fff" :"#373737"}]}
                             />
                             <TouchableOpacity
 
@@ -217,9 +249,8 @@ export default class EditPage extends React.Component {
                             }}
 
                             style={[StylesAccount.text_input, {
-                                // backgroundColor: this.state.dark_mode ? COLOR.dark_gray : "#fff",
-                                borderColor: this.state.dark_mode ? "#fff" : "#000",
-                                color: this.state.dark_mode ? "#fff" : "#000", marginTop: RFValue(0)
+                                borderBottomColor:this.state.dark_mode ? "#fff" :"#373737",
+                                color: this.state.dark_mode ? "#fff" :"#373737", marginTop: RFValue(0)
                             }]}
 
 

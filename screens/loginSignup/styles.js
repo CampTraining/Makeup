@@ -112,6 +112,7 @@ export const StylesLogSign = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     padding: RFValue(10),
+    fontSize: FONTS.h5,
   },
 
   viewStyle1: {

@@ -379,8 +379,10 @@ export default function Posts(props) {
                                     </TouchableOpacity>
 
                                     <TouchableOpacity style={Styles.anyIconContainer}
+                                    onPress={() => {
+                                        navigation.navigate("Comment")
+                                    }} 
 
-                                    // onPress={() => isAuth ? likeFun(index) : navigation.navigate("Login")}
                                     >
                                         <FontAwesome name="comment-o" size={ICONS.lgIcon} />
                                     </TouchableOpacity>
