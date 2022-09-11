@@ -42,7 +42,7 @@ export class Comment extends Component {
     this.state = {
       text: "",
       visible: true,
-      likeCounter: 0,
+      // likeCounter: 0,
       replay_comment: '',
       current_comment: "",
 
@@ -55,24 +55,28 @@ export class Comment extends Component {
       comments: [
         {
           name: "Elwishy",
+          likeCounter: 0,
           image: images.story1,
           comment_content: "Alkont De Mont",
           replays: []
         },
         {
           name: "Tantawe",
+          likeCounter: 0,
           image: images.story1,
           comment_content: "Hello World",
           replays: [],
         },
         {
           name: "Alaa",
+          likeCounter: 0,
           image: images.story1,
           comment_content: "tlashany ashank mesh ashany",
           replays: [],
         },
         {
           name: "Salma",
+          likeCounter: 0,
           image: images.story1,
           comment_content: "elweshosh hatetabl",
           replays: [],
@@ -80,6 +84,7 @@ export class Comment extends Component {
         ,
         {
           name: "Asmaa",
+          likeCounter: 0,
           image: images.story1,
           comment_content: "law elklam ala mkask elbeso",
           replays: [],
@@ -166,10 +171,11 @@ export class Comment extends Component {
     })
   }
 
-  add_like() {
-    let numOfLikes = this.state.likeCounter
-    numOfLikes++
-    this.setState({ likeCounter: numOfLikes })
+  add_like(indexOfComment) {
+    let comment_likeCounter = this.state.comments[indexOfComment].likeCounter
+    let numOfLikes = comment_likeCounter
+      numOfLikes++
+    this.setState({ comment_likeCounter: numOfLikes })
   }
 
 
@@ -238,6 +244,7 @@ export class Comment extends Component {
 
               {/* map */}
               {this.state.comments.map((comment, index) => (
+      
                 <View style={[styles.container_comment, { borderBottomWidth: index == this.state.comments.length - 1 ? 0 : 1 }]}
                 >
                   <View style={{}}>
@@ -339,7 +346,7 @@ export class Comment extends Component {
 
                         }}
                         onPress={() => {
-                          this.add_like()
+                          this.add_like(index)
                         }}
                       >
                         <Text style={{
@@ -349,7 +356,7 @@ export class Comment extends Component {
                           // fontWeight: 'bold',
                           paddingHorizontal: RFValue(3)
                         }}
-                        >{this.state.likeCounter == 0 ? null : this.state.likeCounter}</Text>
+                        >{comment.likeCounter == 0 ? null : comment.likeCounter}</Text>
 
                         <Text style={{
 

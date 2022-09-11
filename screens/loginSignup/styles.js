@@ -44,7 +44,7 @@ export const StylesLogSign = StyleSheet.create({
     paddingHorizontal: RFValue(15),
   },
   SplashSrceen_text: {
-    fontSize: FONTS.h2,
+    fontSize: FONTS.h3,
     fontWeight: 'bold',
     width: '70%',
     fontFamily: 'serif',
@@ -62,7 +62,7 @@ export const StylesLogSign = StyleSheet.create({
     paddingHorizontal: RFValue(30),
   },
   makeUp_photo_text: {
-    fontSize: FONTS.h3,
+    fontSize: FONTS.h4,
     color: COLOR.dark_gray,
     fontWeight: 'bold',
     fontFamily: 'serif',

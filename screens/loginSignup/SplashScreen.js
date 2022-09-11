@@ -19,7 +19,7 @@ export class SplashScreen extends React.Component {
       <>
         {/* <StatusBar hidden={true} /> */}
         <ImageBackground
-          source={images.splash}
+          source={images.splashImage}
           style={{flex: 1, justifyContent: 'flex-end'}}
           resizeMode="cover">
           <View style={[StylesLogSign.textBtnContainer]}>

@@ -1,3 +1,4 @@
+const splashImage = require('../assets/Images/splash.jpg')
 const story1 = require('../assets/Images/story.jpg');
 const story2 = require('../assets/Images/story2.jpg');
 const story3 = require('../assets/Images/story3.jpg');
@@ -28,6 +29,7 @@ const phone = require('../assets/Images/phone.png');
 const splash = require('../assets/Images/Makeup_splash.jpg');
 
 export default {
+  splashImage,
   story1,
   story2,
   story3,
