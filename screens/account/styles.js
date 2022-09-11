@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {COLOR, FONTS, ICONS} from '../../constants';
+import { StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { COLOR, FONTS, ICONS } from '../../constants';
 
 export const StylesAccount = StyleSheet.create({
   container: {
@@ -120,7 +120,119 @@ export const StylesAccount = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  //////////////////////////////// (profile)
+  //////////////////////////////// (Account)
+  accountPage_container: {
+    backgroundColor: COLOR.White,
+    width: '100%',
+    height: '100%',
+    alignItems: "center",
+    // justifyContent:"center",
+  },
+  accountHeader: {
+    width: "100%",
+    height: RFValue(60),
+    alignItems: 'center',
+    justifyContent: 'center',
+    // backgroundColor:"#ff0",
+    backgroundColor: COLOR.PrimaryColor,
+  },
+  textOfAccount_header: {
+    fontSize: FONTS.h3,
+    fontWeight: 'bold',
+    color: COLOR.White,
+    alignSelf: 'center',
+    //  fontFamily:"serif"
+    fontFamily: "cursive",
+
+  },
+  accountDetails_container: {
+    width: "100%",
+    padding: RFValue(8),
+    height: RFValue(250),
+    alignItems: 'center',
+    // marginTop:RFValue(30),
+    borderBottomLeftRadius: RFValue(35),
+    borderBottomRightRadius: RFValue(35),
+    // backgroundColor:'#ddd',
+    backgroundColor: COLOR.PrimaryColor,
+  },
+  accountImage_container: {
+    // width:'100%',
+    width: RFValue(100),
+    height: RFValue(100),
+    borderRadius: RFValue(50),
+    marginTop: RFValue(40),
+    marginBottom: RFValue(8),
+    backgroundColor: '#ddd'
+  },
+  accountImage_style: {
+    width: RFValue(100),
+    height: RFValue(100),
+    resizeMode: 'contain',
+    borderRadius: RFValue(50),
+    borderWidth: RFValue(1.5),
+    borderColor: '#ccc',
+  },
+  accountName_text: {
+    color:COLOR.black,
+    fontSize: FONTS.h4,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    // fontFamily:"Gill Sans"
+    // fontFamily: 'serif',
+  },
+  accountEdit_container: {
+    // width:'100%',
+    width: RFValue(75),
+    height: RFValue(30),
+    alignItems: 'center',
+    borderRadius: RFValue(30),
+    marginTop: RFValue(8),
+    marginBottom: RFValue(10),
+    justifyContent: 'center',
+    backgroundColor: COLOR.White,
+  },
+  accountOptions_container: {
+    width: "95%",
+    alignItems: 'center',
+    paddingHorizontal: RFValue(20),
+    paddingVertical: RFValue(15),
+    height: RFValue(60),
+    flexDirection: 'row',
+    borderRadius: RFValue(20),
+    marginVertical: RFValue(6),
+    backgroundColor: "#ddd",
+    justifyContent: 'space-between',
+  },
+  accountOptions_icons: {
+    color: COLOR.PrimaryColor,
+    paddingHorizontal: RFValue(10)
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Old Style
   view_containr_profile: {
     backgroundColor: COLOR.White,
     width: '100%',
@@ -201,4 +313,7 @@ export const StylesAccount = StyleSheet.create({
     alignItems: 'center',
     // marginTop: RFValue(15)
   },
+
+
+
 });
