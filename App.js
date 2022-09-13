@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native"
-import { HomeTabs } from "./navigation/HomeTabs";;
+import { HomeTabs } from "./navigation/HomeTabs";
 import { Auth } from "./navigation/Auth";
 import { ForgetPass, PhoneVerification, VerifyPass } from "./screens/forgetPass";
 import { Home } from "./screens/home";
@@ -15,12 +15,12 @@ export default function App(props) {
 
 
 
-       <NavigationContainer> 
+      <NavigationContainer>
         <Auth />
 
       </NavigationContainer>
 
-      
+
 
 
 
@@ -31,8 +31,8 @@ export default function App(props) {
 
 
 
-      {/* <ForgetPass/> */}
-      {/* <PhoneVerification/> */}
+      {/* <ForgetPass /> */}
+      {/* <PhoneVerification /> */}
       {/* <VerifyPass/> */}
       {/* <HomeTabs/> */}
       {/* <LogOrSign/> */}

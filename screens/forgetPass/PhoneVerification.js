@@ -20,18 +20,36 @@ import Clipboard from '@react-native-community/clipboard';
 
 export default class PhoneVerification extends React.Component {
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       code: "",
+      btnDisabled: true,
 
     }
 
   }
 
 
+  componentDidMount() {
+    console.log(this.props.route.params.otp)
+  }
 
+
+  otpValidation() {
+    if (this.state.code == this.props.route.params.otp) {
+      this.props.navigation.navigate('NewPass', {
+        user_email: this.props.route.params.email,
+        user_type: this.props.route.params.type,
+      })
+
+    }
+    else {
+      alert("Sorry! you have entered a wrong code.")
+    }
+
+  }
 
   render() {
     const { otp, email, type } = this.props.route.params;
@@ -124,19 +142,14 @@ export default class PhoneVerification extends React.Component {
                 codeInputFieldStyle={StylesForgetPass.underlineStyleBase}
                 codeInputHighlightStyle={StylesForgetPass.underlineStyleHighLighted}
                 onCodeFilled={(code => {
-                  console.log(`Code is ${code}, you are good to go!`)
+                  // console.log(`Code is ${code}, you are good to go!`)
+                  this.setState({ btnDisabled: false })
                 })}
                 code={this.state.code}
                 onCodeChanged={
                   code => this.setState({ code: code })
                 }
               />
-
-
-
-
-
-
 
 
 
@@ -164,12 +177,14 @@ export default class PhoneVerification extends React.Component {
 
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate('NewPass', {
-                  user_email: email,
-                  user_type: type,
-                })
+                // this.props.navigation.navigate('NewPass', {
+                //   user_email: email,
+                //   user_type: type,
+                // })
+                { this.otpValidation() }
                 // alert("Done")
               }}
+              disabled={this.state.btnDisabled}
               style={[
                 StylesForgetPass.resetView,
                 { alignSelf: 'center', marginTop: RFValue(12) },
