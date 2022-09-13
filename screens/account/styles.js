@@ -232,7 +232,7 @@ export const StylesAccount = StyleSheet.create({
 
 
 
-  // Old Style
+  // Old Account Style
   view_containr_profile: {
     backgroundColor: COLOR.White,
     width: '100%',

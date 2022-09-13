@@ -49,7 +49,6 @@ export default class EditPage extends React.Component {
         this.setChangeName(user_name)
     }
 
-
     change_dark_mode() {
         let DarkMode = this.state.dark_mode
         this.setState({ dark_mode: !DarkMode })
@@ -72,7 +71,6 @@ export default class EditPage extends React.Component {
         this.setState({ dark_mode: mood })
     }
 
-
     requestCameraPermission = async () => {
         try {
             const granted = await PermissionsAndroid.request(
@@ -93,7 +91,6 @@ export default class EditPage extends React.Component {
             console.warn(err);
         }
     };
-
 
     selectFromGallery = () => {
 
@@ -130,6 +127,7 @@ export default class EditPage extends React.Component {
     async setChangeImage(change_image) {
         await AsyncStorage.setItem('changeImage', JSON.stringify(change_image))
     }
+
     async getChangeImage() {
         let get_image = await AsyncStorage.getItem('changeImage')
 
@@ -144,10 +142,10 @@ export default class EditPage extends React.Component {
 
     }
 
-
     async setChangeName(change_name) {
         await AsyncStorage.setItem('changename', JSON.stringify(change_name))
     }
+
     async getChangeName() {
         let get_name = await AsyncStorage.getItem('changename')
 
@@ -213,15 +211,22 @@ export default class EditPage extends React.Component {
                     </View>
 
 
+                    
+
 
                     <ScrollView>
                         <View style={[StylesAccount.view_profil_imge, { height: 200 ,}]}>
-                            <Image
-                                source={{ uri: this.state.photo_uri }}
-                                style={[StylesAccount.style_img_profil,{
-                                    backgroundColor:this.state.dark_mode ? "#373737" :"#fff",
-                                    borderColor:this.state.dark_mode ? "#fff" :"#373737"}]}
+                        <TouchableOpacity 
+                            onPress={() => {
+                                this.selectFromGallery()
+                                //async
+                            }}
+                            style={StylesAccount.accountImage_container}
+                        >
+                            <Image style={StylesAccount.accountImage_style} 
+                                source={images.story11}
                             />
+                        </TouchableOpacity>
                             <TouchableOpacity
 
                                 onPress={() => {

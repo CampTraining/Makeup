@@ -252,10 +252,15 @@ export default class Account extends React.Component {
                             // backgroundColor:'#ff0'
                         }}>
 
-                            {/* Notifications */}
-                            <TouchableOpacity style={[StylesAccount.accountOptions_container,{backgroundColor:this.state.dark_mode? COLOR.gray : '#ddd'}]}>
-                                <Ionicons name="notifications" size={RFValue(ICONS.mdIcon)} style={StylesAccount.accountOptions_icons}/>
-                                <Text style={{ flex:1, fontSize: RFValue(FONTS.h5), color:this.state.dark_mode? "#fff" : COLOR.black, fontWeight:"bold" }}>Notifications</Text>
+                            {/* Change Pass */}
+                            <TouchableOpacity 
+                                onPress={() => {
+                                    this.props.navigation.navigate("NewPass")
+                                }}
+                                style={[StylesAccount.accountOptions_container,{backgroundColor:this.state.dark_mode? COLOR.gray : '#ddd'}]}
+                            >
+                                <FontAwesome5 name="key" size={RFValue(ICONS.mdIcon)} style={StylesAccount.accountOptions_icons}/>
+                                <Text style={{ flex:1, fontSize: RFValue(FONTS.h5), color:this.state.dark_mode? "#fff" : COLOR.black, fontWeight:"bold" }}>Change Password</Text>
                                 <FontAwesome5 name="chevron-right" size={RFValue(ICONS.smIcon)} color={this.state.dark_mode? COLOR.White : null} />
                             </TouchableOpacity>
 
@@ -281,7 +286,7 @@ export default class Account extends React.Component {
                             >
                                 <Ionicons name="moon-sharp" size={RFValue(ICONS.mdIcon)} style={StylesAccount.accountOptions_icons}/>
                                 <Text style={{ flex:1, fontSize: RFValue(FONTS.h5), color:this.state.dark_mode? "#fff" : COLOR.black, fontWeight:"bold" }}>Dark Mode</Text>
-                                <FontAwesome5  name={this.state.icon_dark ? "toggle-on" : "toggle-off"} 
+                                <FontAwesome  name={this.state.icon_dark ? "toggle-on" : "toggle-off"} 
                                 size={RFValue(ICONS.lgIcon)} style={{ color:this.state.dark_mode ? COLOR.PrimaryColor : null}}/>
                             </TouchableOpacity>
                             
