@@ -8,7 +8,7 @@ import {
 import Feather from "react-native-vector-icons/Feather"
 import { Styles } from "./styles";
 import { COLOR, images, FONTS, ICONS } from "../../constants";
-import { Highlights, Posts ,Comment} from "../home"
+import { Highlights, Posts, Comment } from "../home"
 import { Header } from "../../components";
 const hightlights = [
     { name: "Alaa Mohamed ", img: images.story1 },
@@ -28,6 +28,7 @@ const hightlights = [
     { name: "Doha Abdulla", img: images.story15 },
     { name: "Rana Khaled", img: images.story16 },
     { name: "Aya Mohamed", img: images.story17 },
+
 ]
 const posts = [
     {

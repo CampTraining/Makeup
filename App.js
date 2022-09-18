@@ -4,6 +4,7 @@ import { HomeTabs } from "./navigation/HomeTabs";
 import { Auth } from "./navigation/Auth";
 import { ForgetPass, PhoneVerification, VerifyPass } from "./screens/forgetPass";
 import { Home } from "./screens/home";
+import { Followers } from "./screens/account";
 
 
 
@@ -21,6 +22,7 @@ export default function App(props) {
       </NavigationContainer>
 
 
+      {/* <Followers></Followers> */}
 
 
 

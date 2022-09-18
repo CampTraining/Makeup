@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { COLOR, FONTS, ICONS } from '../../constants';
+import { COLOR, FONTS, ICONS, MARGIN, PADDING, RADIUS } from '../../constants';
 
 export const StylesAccount = StyleSheet.create({
   container: {
@@ -174,7 +174,7 @@ export const StylesAccount = StyleSheet.create({
     borderColor: '#ccc',
   },
   accountName_text: {
-    color:COLOR.black,
+    color: COLOR.black,
     fontSize: FONTS.h4,
     fontWeight: 'bold',
     alignSelf: 'center',
@@ -313,6 +313,134 @@ export const StylesAccount = StyleSheet.create({
     alignItems: 'center',
     // marginTop: RFValue(15)
   },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  followersHeaderView: {
+    // backgroundColor: "#33a",
+    width: "100%",
+    height: RFValue(60),
+    // justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center"
+
+  },
+  followersHeaderText: {
+    marginLeft: RFValue(80),
+    fontSize: FONTS.h3,
+    fontWeight: 'bold',
+    fontFamily: 'serif',
+    color: COLOR.PrimaryColor,
+    // fontFamily: "Gill Sans"
+
+
+
+
+  },
+
+  searchboxContainer: {
+    width: "100%",
+    height: RFValue(60),
+    // backgroundColor: "#d0d",
+    justifyContent: "center",
+    alignItems: "center",
+
+  },
+  searchbox: {
+    width: "88%",
+    height: RFValue(40),
+    backgroundColor: COLOR.White,
+    borderRadius: RADIUS.xsRadius,
+    flexDirection: "row",
+    alignItems: "center",
+    // padding: PADDING.smPadding,
+    borderColor: "#b2b2b244",
+    borderWidth: 1
+
+
+
+  },
+  searchIcon: {
+    marginLeft: MARGIN.xsMargin
+  },
+  searchInput: {
+    // backgroundColor: "#f22",
+    width: "85%",
+    height: "100%",
+    marginLeft: RFValue(10),
+
+
+  },
+  viewAccContainer: {
+    width: "100%",
+    height: RFValue(100),
+    // backgroundColor: "#6f6",
+    flexDirection: "row",
+    // padding: PADDING.mdPadding,
+    alignItems: "center",
+    justifyContent: "space-around"
+
+  },
+  viewInfoContainer: {
+    width: RFValue(270),
+    height: RFValue(100),
+    // backgroundColor: "#342",
+    flexDirection: "row",
+    alignItems: "center",
+
+
+  },
+  profileImage: {
+    width: RFValue(65),
+    height: RFValue(65),
+    borderRadius: RFValue(32.5)
+
+  },
+
+  ViewNameContainer: {
+    // backgroundColor: "#55f",
+    width: RFValue(190),
+    height: RFValue(60),
+    marginLeft: MARGIN.xsMargin,
+    justifyContent: "center",
+    padding: PADDING.xsPadding
+
+  },
+
+  nameText: {
+    fontSize: FONTS.h5,
+    color: COLOR.black,
+
+
+  },
+
+  viewFollow: {
+    backgroundColor: COLOR.PrimaryColor,
+    alignItems: "center",
+    justifyContent: "center",
+    width: RFValue(75),
+    height: RFValue(40),
+    borderRadius: RFValue(5),
+
+  }
 
 
 
