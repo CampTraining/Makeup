@@ -20,10 +20,12 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Feather from "react-native-vector-icons/Feather"
 import * as ImagePicker from 'react-native-image-picker';;
 import { StylesAccount } from "./styles";
-import { COLOR, FONTS, ICONS, images } from "../../constants";
+import { COLOR, FONTS, ICONS, images, MARGIN } from "../../constants";
 import { RFValue } from "react-native-responsive-fontsize";
 import { BackArrowHeader } from "../../components";
 import { StylesForgetPass } from "../forgetPass";
+import { StylesLogSign } from '../loginSignup';
+import { Button } from "react-native-paper";
 export default class EditPage extends React.Component {
 
     constructor() {
@@ -32,10 +34,22 @@ export default class EditPage extends React.Component {
             photo_uri: "https://www.google.com/imgres?imgurl=https%3A%2F%2Fhomey.app%2Fimg%2Fnav%2Faccount.svg&imgrefurl=https%3A%2F%2Fhomey.app%2Fen-gb%2Faccount%2Fsubscriptions%2F&tbnid=mkm9VteTbOudZM&vet=12ahUKEwjH0IyGzt_5AhUPeBoKHT6RBM4QMygSegUIARDnAQ..i&docid=d51JUCMEu1GnmM&w=800&h=800&q=photo%20account&ved=2ahUKEwjH0IyGzt_5AhUPeBoKHT6RBM4QMygSegUIARDnAQ",
             icon_dark: false,
             dark_mode: false,
-           name: "Ayman Gaballah",
+            name: "Ayman Gaballah",
             inpu_name: "",
             Visable_modal1: false,
             Visable_modal2: false,
+
+            
+
+            account_username: '',
+            active_editOfUsername: false,
+
+            // account_phone: '',
+            // active_editOfPhone:false,
+
+            email_err: '',
+            account_email: '',
+            active_editOfEmail: false,
 
         }
     }
@@ -44,7 +58,7 @@ export default class EditPage extends React.Component {
         let user_name = this.state.inpu_name
         this.setState({
             name: user_name,
-           
+
         })
         this.setChangeName(user_name)
     }
@@ -166,67 +180,64 @@ export default class EditPage extends React.Component {
         this.get_dark()
     }
 
-   
+    edit_Username() {
+        let editState = this.state.active_editOfUsername
+        if (!editState) {
+            editState = true
+        }
+        this.setState({ active_editOfUsername: editState })
+        console.log(editState)
+    }
+
+    edit_Email() {
+        let editState = this.state.active_editOfEmail
+        if (!editState) {
+            editState = true
+        }
+        this.setState({ active_editOfEmail: editState })
+        console.log(editState)
+    }
+
+    email_validation() {
+        let email = this.state.account_email;
+
+        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/; // asdsadsad@sadjkjshd.skldjlskjd
+        if (reg.test(email.trim()) == false || email.trim().length == 0) {
+            this.setState({ email_err: 'Please Enter Correct Email!' });
+        } else {
+            this.setState({ email_err: '' });
+            // this.sendOTP();
+        }
+    }
+
+
 
     render() {
         return (
             <>
-                <View style={[StylesAccount.container,
-                { backgroundColor: this.state.dark_mode ? COLOR.dark_gray : "#fff" }]}>
 
-
-                    <View style={[StylesForgetPass.arrowContainer, {
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        // backgroundColor: '#f00',
-                        alignItems: 'center',
-                        paddingHorizontal: 10
-                    }]}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                this.props.navigation.navigate("Account")
-                                // this.set_name()
-                                // this.getChangeName()
-                            }}
-                        >
-                            <FontAwesome5 name="chevron-left" color={this.state.dark_mode ? "#fff" :"#373737"}
-                                size={ICONS.xlIcon} style={{ marginRight: RFValue(15) }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-
-                            onPress={() => {
-                                this.set_name()
-                                // this.getChangeName()
-                                this.getChangeImage()
-                                this.props.navigation.navigate("Account")
-                                //async
-                            }}
-
-                            style={[StylesAccount.bottom_text_input,
-                            { alignItems: 'flex-end', paddingRight: RFValue(15) }]}>
-
-                            <Text style={{ fontSize: RFValue(20), fontWeight: "bold", color: COLOR.PrimaryColor }}>Done</Text>
-
-                        </TouchableOpacity>
-                    </View>
-
-
-                    
-
+                <View style={[StylesForgetPass.container]}>
+                    <BackArrowHeader onPress={() => this.props.navigation.goBack()} />
 
                     <ScrollView>
-                        <View style={[StylesAccount.view_profil_imge, { height: 200 ,}]}>
-                        <TouchableOpacity 
-                            onPress={() => {
-                                this.selectFromGallery()
-                                //async
-                            }}
-                            style={StylesAccount.accountImage_container}
-                        >
-                            <Image style={StylesAccount.accountImage_style} 
-                                source={images.story11}
-                            />
-                        </TouchableOpacity>
+
+                        {/* Change Photo View */}
+                        <View style={[StylesAccount.view_profil_imge, { height: 200, marginTop: RFValue(0) }]}>
+
+                            {/* Account Image */}
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.selectFromGallery()
+                                    //async
+                                }}
+                                style={[StylesAccount.accountImage_container, { marginBottom: RFValue(0) }]}
+                            >
+                                <Image style={StylesAccount.accountImage_style}
+                                    source={images.story11}
+                                />
+                            </TouchableOpacity>
+
+                            {/* Change Photo Text */}
                             <TouchableOpacity
 
                                 onPress={() => {
@@ -239,44 +250,143 @@ export default class EditPage extends React.Component {
 
                             </TouchableOpacity>
 
-
-
                         </View>
 
-                        <TextInput
-                            placeholder="Enter New Name "
-                            placeholderTextColor={this.state.dark_mode ? "#fff" : COLOR.gray}
+                        {/* Username TextInput */}
+                        <View style={[StylesLogSign.email_passView, { marginTop: MARGIN.mdMargin }]}>
+                            <FontAwesome5
+                                name="user"
+                                size={ICONS.mdIcon}
+                                color={COLOR.PrimaryColor}
+                                style={{ marginLeft: RFValue(10) }}
+                            />
 
-
-                            value={this.state.inpu_name}
-                            onChangeText={(value) => {
-                                this.setState({ inpu_name: value })
-                            }}
-
-                            style={[StylesAccount.text_input, {
-                                borderBottomColor:this.state.dark_mode ? "#fff" :"#373737",
-                                color: this.state.dark_mode ? "#fff" :"#373737", marginTop: RFValue(0)
-                            }]}
-
-
-                        />
-
-
-
-                        {/* <TouchableOpacity
-
-                                onPress={() => {
-                                    this.set_name()
-
-
+                            <TextInput
+                                value={this.state.account_username}
+                                onChangeText={value => {
+                                    this.setState({ account_username: value });
                                 }}
+                                placeholder="Username"
+                                style={[StylesLogSign.email_passTextInput]}
+                                keyboardType="default"
+                                placeholderTextColor={COLOR.gray}
+                                autoCapitalize="none"
+                            />
 
-                                style={StylesAccount.bottom_text_input}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.edit_Username();
+                                }}
+                            >
+                                <FontAwesome5
+                                    name="pen"
+                                    size={ICONS.smIcon}
+                                    color={(this.state.active_editOfUsername ? COLOR.dark_gray : COLOR.gray)}
+                                    style={{ marginRight: RFValue(10) }}
+                                />
+                            </TouchableOpacity>
+                        </View>
 
-                                <Text style={{ fontSize: RFValue(20), fontWeight: "bold", color: COLOR.PrimaryColor }}>Update</Text>
+                        {/* Phone Number TextInput */}
+                        {/* <View style={[StylesLogSign.email_passView, { marginTop: MARGIN.mdMargin }]}>
+                            <FontAwesome5
+                                name="phone-alt"
+                                size={ICONS.mdIcon}
+                                color={COLOR.PrimaryColor}
+                                style={{ marginLeft: RFValue(10) }}
+                            />
 
-                            </TouchableOpacity> */}
+                            <TextInput
+                                value={this.state.account_phone}
+                                onChangeText={value => {
+                                    this.setState({ account_phone: value });
+                                }}
+                                placeholder="Phone number"
+                                style={StylesLogSign.email_passTextInput}
+                                keyboardType="phone-pad"
+                                placeholderTextColor={COLOR.gray}
+                                autoCapitalize="none"
+                            />
 
+                            <TouchableOpacity>
+                                <FontAwesome5
+                                    name="pen"
+                                    size={ICONS.smIcon}
+                                    color={COLOR.gray}
+                                    style={{ marginRight: RFValue(10) }}
+                                />
+                            </TouchableOpacity>
+                        </View> */}
+
+                        {/* Email TextInput */}
+                        <View style={[StylesLogSign.email_passView, { marginTop: MARGIN.mdMargin }]}>
+                            <FontAwesome5
+                                name="envelope"
+                                size={ICONS.mdIcon}
+                                color={COLOR.PrimaryColor}
+                                style={{ marginLeft: RFValue(10) }}
+                            />
+
+                            <TextInput
+                                value={this.state.account_email}
+                                onChangeText={value => {
+                                    this.setState({ account_email: value });
+                                }}
+                                placeholder="Email"
+                                style={StylesLogSign.email_passTextInput}
+                                keyboardType="email-address"
+                                placeholderTextColor={COLOR.gray}
+                                autoCapitalize="none"
+                            />
+
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.edit_Email();
+                                }}
+                            >
+                                <FontAwesome5
+                                    name="pen"
+                                    size={ICONS.smIcon}
+                                    color={(this.state.active_editOfEmail ? COLOR.dark_gray : COLOR.gray)}
+                                    style={{ marginRight: RFValue(10) }}
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                        {/* Error Text of Email Validation */}
+                        <Text
+                            style={{
+                                fontSize: FONTS.h5,
+                                color: COLOR.dark_red,
+                                marginTop: 5,
+                                alignSelf:'center'
+                            }}>
+                            {this.state.email_err}
+                        </Text>
+
+
+                        {/* Save Cahnges Button */}
+                        <TouchableOpacity
+                            activeOpacity={0.4}
+                            onPress={() => {
+                                this.email_validation()
+                            }}
+                            style={[
+                                StylesForgetPass.resetView,
+                                {
+                                    alignSelf: 'center',
+                                    width: RFValue(200),
+                                    marginBottom: MARGIN.mdMargin,
+                                },
+                            ]}>
+                            {/* {this.state.loading ? (
+                                <ActivityIndicator size={'large'} color={COLOR.White} />
+                            ) : (
+                                <Text style={StylesForgetPass.resetText}>Update Password</Text>
+                            )} */}
+
+                            <Text style={StylesForgetPass.resetText}>Save Changes</Text>
+                        </TouchableOpacity>
 
                     </ScrollView>
 
@@ -290,6 +400,160 @@ export default class EditPage extends React.Component {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Error Text
+{/* <Text
+    style={{
+        fontSize: FONTS.h5,
+        color: COLOR.dark_red,
+        marginTop: 5,
+    }}>
+    {this.state.email_err}
+</Text> */}
+
+
+// Old Header View
+{/* <View style={[StylesForgetPass.arrowContainer, {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#f00',
+    alignItems: 'center',
+    paddingHorizontal: 10
+}]}>
+    <TouchableOpacity
+        onPress={() => {
+            this.props.navigation.navigate("Account")
+            // this.set_name()
+            // this.getChangeName()
+        }}
+    >
+        <FontAwesome5 name="chevron-left" color={this.state.dark_mode ? "#fff" : "#373737"}
+            size={ICONS.xlIcon} style={{ marginRight: RFValue(15) }} />
+    </TouchableOpacity>
+    <TouchableOpacity
+
+        onPress={() => {
+            this.set_name()
+            // this.getChangeName()
+            this.getChangeImage()
+            this.props.navigation.navigate("Account")
+            //async
+        }}
+
+        style={[StylesAccount.bottom_text_input,
+        { alignItems: 'flex-end', paddingRight: RFValue(15) }]}>
+
+        <Text style={{ fontSize: RFValue(20), fontWeight: "bold", color: COLOR.PrimaryColor }}>Done</Text>
+
+    </TouchableOpacity>
+</View> */}
+
+
+//  Old TextInput
+// <TextInput
+//     placeholder="Enter New Name "
+//     placeholderTextColor={this.state.dark_mode ? "#fff" : COLOR.gray}
+
+
+//     value={this.state.inpu_name}
+//     onChangeText={(value) => {
+//         this.setState({ inpu_name: value })
+//     }}
+
+//     style={[StylesAccount.text_input, {
+//         borderBottomColor: this.state.dark_mode ? "#fff" : "#373737",
+//         color: this.state.dark_mode ? "#fff" : "#373737", marginTop: RFValue(0)
+//     }]}
+// />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Old Update Button
+//     < TouchableOpacity
+
+// onPress = {() => {
+//     this.set_name()
+
+
+// }}
+
+// style = { StylesAccount.bottom_text_input } >
+
+//     <Text style={{ fontSize: RFValue(20), fontWeight: "bold", color: COLOR.PrimaryColor }}>Update</Text>
+
+// </TouchableOpacity >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Old Code:
 
 
 // <View
